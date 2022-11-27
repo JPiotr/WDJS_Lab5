@@ -17,13 +17,17 @@ function addNumbers(a,b) {
     return x
 }
 
-function addNumbersWMark(a,b) {
-    let x = asyncAdd(a,b)
-    return x
+async function addNumbersWMark(a,b) {
+    return await asyncAdd(a,b).catch((err) => {
+        console.error(err);
+        return 0;
+    });
 }
 
 function addMultipleNumbers(i){
+    // let nums = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10]]
     let nums = []
+    // console.log(nums)
     let addedNums = []
     const ii = parseInt(i)
     for(let x = 0;x<=1;x++){
@@ -31,9 +35,10 @@ function addMultipleNumbers(i){
     }
     performance.mark("multipleAddStart")
     for(let y = 0;y<ii;y++){
-        addedNums.push(addNumbersWMark(nums[0][y],nums[1][y]))
+        addedNums.push(addNumbersWMark(nums[0][y], nums[1][y]))
     }
     performance.mark("multipleAddEnd")
+    console.log(addedNums)
     console.log(performance.measure("multipleAdd","multipleAddStart","multipleAddEnd"))
     return addedNums
 }
@@ -46,11 +51,3 @@ function generateNumbers(i){
     console.log(nums)
     return nums;
 }
-
-//before optymalization
-//25.299999952316284 f attempt
-//1.6000001430511475 s attempt
-
-//after optymalization
-//fastest : 1.2999999523162842
-//slowest : 1.7999999523162842

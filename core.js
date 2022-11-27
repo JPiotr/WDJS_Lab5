@@ -24,7 +24,7 @@ async function addNumbersWMark(a,b) {
     });
 }
 
-function addMultipleNumbers(i){
+async function addMultipleNumbers(i){
     // let nums = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10]]
     let nums = []
     // console.log(nums)
@@ -35,7 +35,7 @@ function addMultipleNumbers(i){
     }
     performance.mark("multipleAddStart")
     for(let y = 0;y<ii;y++){
-        addedNums.push(addNumbersWMark(nums[0][y], nums[1][y]))
+        addedNums.push(await addNumbersWMark(nums[0][y], nums[1][y]))
     }
     performance.mark("multipleAddEnd")
     console.log(addedNums)
@@ -50,4 +50,10 @@ function generateNumbers(i){
     }
     console.log(nums)
     return nums;
+}
+
+function onStart() {
+    for (let p = 0; p < 100; p++) {
+        addMultipleNumbers(p + 1)
+    }
 }
